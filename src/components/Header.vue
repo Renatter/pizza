@@ -12,16 +12,16 @@
         <div class="text-[25px] font-medium ml-[10px]">
           <div class="flex">
             <p class="">Доставка пиццы</p>
-            <p class="text-[#fde047] ml-[10px]">Москва</p>
+            <p class="text-[#FF2E65] ml-[10px]">Москва</p>
           </div>
           <div class="text-[20px]">
             Время доставки
-            <span class="text-[#fde047] ml-[10px]">от 31 мин</span>
+            <span class="text-[#FF2E65] ml-[10px]">от 31 мин</span>
           </div>
         </div>
       </div>
       <div class="flex">
-        <div class="text-[26px] text-[#fde047] font-bold">8 499 391-84-49</div>
+        <div class="text-[26px] text-[#FF2E65] font-bold">8 499 391-84-49</div>
         <div
           v-if="!currentUser"
           class="ml-[15px] cursor-pointer focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
