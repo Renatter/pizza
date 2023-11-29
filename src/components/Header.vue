@@ -2,11 +2,13 @@
   <div>
     <div class="flex justify-between items-center">
       <div class="flex">
-        <img
+       <router-link to="/">
+         <img
           class="w-[200px]"
           src="https://upload.wikimedia.org/wikipedia/ru/thumb/9/91/Dodo_Logo.svg/1280px-Dodo_Logo.svg.png"
           alt=""
         />
+       </router-link>
         <div class="text-[25px] font-medium ml-[10px]">
           <div class="flex">
             <p class="">Доставка пиццы</p>
@@ -34,13 +36,23 @@
         >
           Тіркелу
         </div>
-        <div
+         <router-link to="/Profile">
+          <div
           v-if="currentUser"
           class="ml-[15px] focus:outline-none cursor-pointer text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-          @click="logout"
+        >
+          Кабинет
+        </div>
+         </router-link>
+        <router-link to="/Basket">
+          <div
+          v-if="currentUser"
+          class="ml-[15px] focus:outline-none cursor-pointer text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+        
         >
           Шыгу
         </div>
+        </router-link>
       </div>
     </div>
     <div class="flex justify-between font-medium text-[20px] items-center">
