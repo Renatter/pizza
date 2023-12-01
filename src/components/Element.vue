@@ -1,29 +1,30 @@
 <template>
   <div
-  style="cursor: pointer;"
+    class="w-[150px]"
+    style="cursor: pointer"
     :class="{
       'border-silver': !clicked,
-      'border-[#F7D22D]': clicked,
+      'border-[#FF2E65]': clicked,
       'border-[3px]': clicked,
       'rounded-[7px]': true,
       'border-[1px]': true,
       'max-w-[120px]': true,
       'p-[14px]': true,
       'text-center': true,
-      'grid': true,
+      grid: true,
       'place-items-center': true,
     }"
     @click="handleClick"
   >
-    <img class="w-[70px]" src="https://dodopizza-a.akamaihd.net/static/Img/Ingredients/000D3A262427A95111EA083CF38D509D" alt="" />
-    <p class="font-bold text-[13px]">Острый халапенью</p>
-    <p class="text-[#f7d22d] font-bold">450 тг {{ id }}</p>
+    <img class="w-[70px]" :src="item.img" alt="" />
+    <p class="font-bold text-[13px]">{{ item.name }}</p>
+    <p class="text-[#FF2E65] font-bold">{{ item.price }} тг</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['id'],
+  props: ["item"],
   data() {
     return {
       clicked: false,
@@ -32,8 +33,11 @@ export default {
   methods: {
     handleClick() {
       this.clicked = !this.clicked;
-      // Emit an event with the 'id' when the component is clicked
-      this.$emit('item-clicked', this.id);
+      // Emit an event with positive or negative 'item.price' based on 'clicked' value
+      this.$emit("item-clicked", {
+        price: this.clicked ? this.item.price : -this.item.price,
+        name: this.item.name,
+      });
     },
   },
 };

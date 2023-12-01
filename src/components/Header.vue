@@ -2,13 +2,13 @@
   <div>
     <div class="flex justify-between items-center">
       <div class="flex">
-       <router-link to="/">
-         <img
-          class="w-[200px]"
-          src="https://upload.wikimedia.org/wikipedia/ru/thumb/9/91/Dodo_Logo.svg/1280px-Dodo_Logo.svg.png"
-          alt=""
-        />
-       </router-link>
+        <router-link to="/">
+          <img
+            class="w-[200px]"
+            src="https://upload.wikimedia.org/wikipedia/ru/thumb/9/91/Dodo_Logo.svg/1280px-Dodo_Logo.svg.png"
+            alt=""
+          />
+        </router-link>
         <div class="text-[25px] font-medium ml-[10px]">
           <div class="flex">
             <p class="">Доставка пиццы</p>
@@ -16,7 +16,9 @@
           </div>
           <div class="text-[20px]">
             Время доставки
-            <span class="text-[#FF2E65] ml-[10px]">от 31 мин</span>
+            <span class="text-[#FF2E65] ml-[10px]"
+              >от 31 мин {{ isAdmin }}</span
+            >
           </div>
         </div>
       </div>
@@ -24,40 +26,42 @@
         <div class="text-[26px] text-[#FF2E65] font-bold">8 499 391-84-49</div>
         <div
           v-if="!currentUser"
-          class="ml-[15px] cursor-pointer focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+          class="ml-[15px] cursor-pointer focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           @click="toggleLoginModal"
         >
           Войти
         </div>
         <div
           v-if="!currentUser"
-          class="focus:outline-none cursor-pointer text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+          class="focus:outline-none cursor-pointer text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           @click="toggleRegistrationModal"
         >
           Тіркелу
         </div>
-         <router-link to="/Profile">
-          <div
+        <a>
+          <router-link to="/Basket">
+            <div
+              v-if="currentUser"
+              class="ml-[15px] focus:outline-none cursor-pointer text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+            >
+              Корзина
+            </div>
+          </router-link>
+        </a>
+        <div
+          @click="logout"
           v-if="currentUser"
           class="ml-[15px] focus:outline-none cursor-pointer text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-        >
-          Кабинет
-        </div>
-         </router-link>
-        <router-link to="/Basket">
-          <div
-          v-if="currentUser"
-          class="ml-[15px] focus:outline-none cursor-pointer text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-        
         >
           Шыгу
         </div>
-        </router-link>
       </div>
     </div>
-    <div class="flex justify-between font-medium text-[20px] items-center">
-      <div class="flex items-center mt-[10px]">
-        <p v-for="item in menu" :key="item.id" class="ml-[20px]">
+    <div class="">
+      <div
+        class="flex justify-between items-center text-[15px] font-medium mt-[10px]"
+      >
+        <p v-for="item in menu" :key="item.id" class="mr-[20px]">
           {{ item.title }}
         </p>
       </div>
@@ -166,7 +170,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, onSnapshot, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 export default {
   data() {
@@ -196,6 +200,7 @@ export default {
       ],
       showLoginModal: false,
       showRegistrationModal: false,
+      isAdmin: false,
     };
   },
   methods: {
@@ -247,16 +252,27 @@ export default {
     logout() {
       auth.signOut();
       this.currentUser = null;
+      this.isAdmin = false;
     },
   },
   async created() {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         this.isAuthenticated = true;
-        this.currentUser = user; // Update currentUser
+        this.currentUser = user;
         const userDocRef = doc(db, "users", user.uid);
         onSnapshot(userDocRef, (doc) => {
           console.log(doc);
+        });
+        getDoc(userDocRef).then((doc) => {
+          if (doc.exists()) {
+            const userData = doc.data();
+            console.log(userData);
+
+            this.isAdmin = userData.role === "admin";
+          } else {
+            console.log("No such document!");
+          }
         });
       } else {
         this.isAuthenticated = false;
