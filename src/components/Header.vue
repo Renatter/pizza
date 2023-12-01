@@ -147,6 +147,29 @@
           </div>
           <div class="mb-5">
             <label
+              for="userName"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Имя</label
+            >
+            <input
+              v-model="userName"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Имя"
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Номер</label
+            >
+            <input
+              v-model="userNumber"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Номер"
+            />
+          </div>
+          <div class="mb-5">
+            <label
               for="password"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Password</label
@@ -187,7 +210,6 @@ export default {
       pas: "",
       firstName: "",
       lastName: "",
-      phone: null,
       city: null,
       adress: null,
       kv: null,
@@ -208,6 +230,8 @@ export default {
       showLoginModal: false,
       showRegistrationModal: false,
       isAdmin: false,
+      userName:'',
+      userNumber:'',
     };
   },
   methods: {
@@ -232,13 +256,8 @@ export default {
           currentUser: null,
           user: this.user,
           pas: this.pas,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          phone: this.phone,
-          city: this.city,
-          adress: this.adress,
-          kv: this.kv,
-          etaj: this.etaj,
+          name: this.userName,
+          phone: this.userNumber
         });
       } catch (error) {
         console.log("Ошибка при регистрации пользователя:", error);

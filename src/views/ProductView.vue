@@ -135,8 +135,8 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-import Element from "../components/Element.vue";
 import { db, auth } from "../firebase/firebase";
+import Element from "../components/Element.vue";
 export default {
   components: {
     Element,

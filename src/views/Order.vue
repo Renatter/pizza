@@ -12,9 +12,11 @@
             >Имя</label
           >
           <input
+          disabled
+          v-model="name"
             type="text"
             id="first_name"
-            class="bg-gray-50 w-[500px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="cursor-not-allowed bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Имя"
             required
           />
@@ -26,9 +28,11 @@
             >Номер телефона</label
           >
           <input
+          disabled
+          v-model="phone"
             type="text"
             id="first_name"
-            class="bg-gray-50 w-[500px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="cursor-not-allowed bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Номер телефона"
             required
           />
@@ -40,9 +44,11 @@
             >Адрес доставки</label
           >
           <input
+          disabled
+          v-model="fullAdress"
             type="text"
             id="first_name"
-            class="bg-gray-50 h-[130px] w-[500px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="cursor-not-allowed bg-gray-50 h-[130px] w-[500px] border border-gray-300 text-[#a1a1aa] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Адрес доставки"
             required
           />
@@ -58,7 +64,7 @@
             @click="openModal"
             type="text"
             id="first_name"
-            class="bg-gray-50 w-[500px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Время доставки"
             required
           />
@@ -112,6 +118,7 @@
   </h1>
   <div class="flex">
     <input
+    v-model="promo"
       type="text"
       placeholder="Введите промокод"
       id="small-input"
@@ -149,7 +156,7 @@
           <input
             type="text"
             id="first_name"
-            class="bg-gray-50 w-[322px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 w-[322px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Номер карты"
             required
           />
@@ -157,14 +164,14 @@
             <input
               type="text"
               id="first_name"
-              class="bg-gray-50 w-[202px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="bg-gray-50 w-[202px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Дата"
               required
             />
             <input
               type="text"
               id="first_name"
-              class="bg-gray-50 w-[109px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="bg-gray-50 w-[109px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="CVC"
               required
             />
@@ -191,13 +198,14 @@
           >Наличными</label
         >
       </div>
+   
       <div v-if="selectedPaymentMethod === 'cash'" class="flex items-center">
         <p class="text-[15px]">С какой суммы подготовить сдачу?</p>
         <input
           v-if="!isChecked"
           type="text"
           id="first_name"
-          class="ml-[10px] bg-gray-50 w-[116px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="ml-[10px] bg-gray-50 w-[116px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder=""
           required
         />
@@ -248,6 +256,18 @@
 </template>
 
 <script>
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  onSnapshot,
+  getDoc,
+} from "firebase/firestore";
+
+import { db, auth } from "../firebase/firebase";
 export default {
   data() {
     return {
@@ -257,6 +277,7 @@ export default {
       time: "",
       isChecked: false,
       selectedPaymentMethod: "",
+      promo:'',
       deliveryTimeOptions: [
         "11:00",
         "13:00",
@@ -269,6 +290,13 @@ export default {
         "03:00",
         "05:00",
       ],
+      name:null,
+      phone:null,
+      fullAdress: null,
+      adres:null,
+      podezd:null,
+      floor:null,
+      door:null,
     };
   },
   methods: {
@@ -290,6 +318,33 @@ export default {
       this.closeModal();
     },
   },
+  async created () {
+        auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        this.currentUser = user.uid;
+        const userDocRef = doc(db, "cart", this.currentUser);
+        
+        onSnapshot(userDocRef, (doc) => {
+          if (doc.exists()) {
+           this.adres = doc.data().adres;
+           this.floor = doc.data().floor;
+           this.door = doc.data().door;
+           this.podezd = doc.data().podezd 
+           
+               this.fullAdress = `Адрес: ${this.adres}, подъезд: ${this.podezd}, этаж: ${this.floor}, квартира: ${this.door}, `;
+          } 
+        });
+      }
+      const userInfo = doc(db, "users", this.currentUser);
+      onSnapshot(userInfo, (doc) => {
+          if (doc.exists()) {
+           this.name = doc.data().name;
+           this.phone = doc.data().phone;
+           
+          } 
+        });
+    });
+  }
 };
 </script>
 

@@ -105,6 +105,7 @@
         <div class="pt-[30px] text-[18px] font-medium">
           <div>
             <input
+            v-model="adres"
               type="text"
               id="first_name"
               class="bg-gray-50 border border-gray-300 text-[#FF2E65] text-sm rounded-lg focus:ring-[#FF2E65] focus:border-[#FF2E65] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
@@ -114,6 +115,7 @@
           <div class="flex gap-[15px] pt-[16px]">
             <div>
               <input
+              v-model="podezd"
                 type="text"
                 id="first_name"
                 class="bg-gray-50 border border-gray-300 text-[#FF2E65] text-sm rounded-lg focus:ring-[#FF2E65] focus:border-[#FF2E65] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
@@ -122,6 +124,7 @@
             </div>
             <div>
               <input
+              v-model="floor"
                 type="text"
                 id="first_name"
                 class="bg-gray-50 border border-gray-300 text-[#FF2E65] text-sm rounded-lg focus:ring-[#FF2E65] focus:border-[#FF2E65] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
@@ -130,6 +133,7 @@
             </div>
             <div>
               <input
+              v-model="door"
                 type="text"
                 id="first_name"
                 class="bg-gray-50 border border-gray-300 text-[#FF2E65] text-sm rounded-lg focus:ring-[#FF2E65] focus:border-[#FF2E65] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
@@ -139,6 +143,7 @@
           </div>
           <div class="pt-[16px]">
             <textarea
+            v-model="comment"
               id="message"
               rows="4"
               class="block p-2.5 w-full text-sm text-[#FF2E65] bg-gray-50 rounded-lg border border-gray-300 focus:ring-[#FF2E65] focus:border-[#FF2E65] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
@@ -147,6 +152,7 @@
           </div>
           <RouterLink to="/Order">
             <div
+            @click="addInfo"
               class="mt-[30px] focus:outline-none cursor-pointer text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] rounded-lg text-sm me-2 dark:focus:ring-yellow-900 w-[224px] text-[15px] font-medium text-center py-[14px] px-[30px]"
             >
               Подтевердить адес
@@ -191,9 +197,29 @@ export default {
       items: null,
       currentUser: null,
       totalSum: 0,
+      adres:'',
+      podezd:null,
+      floor:null,
+      door:null,
+      comment:'',
     };
   },
   methods: {
+  async  addInfo() {
+  if (this.currentUser) {
+        const docRef = doc(db, "cart", `${this.currentUser.uid}`);
+        await updateDoc(docRef, {
+         adres: this.adres,
+         podezd: this.podezd,
+         floor: this.floor,
+         door: this.door,
+         comment: this.comment 
+        })
+      
+      }
+    
+      console.log(Adress)
+    },
  async deleteItem(item) {
       try {
         const cartDocRef = doc(db, "cart", this.currentUser.uid);
