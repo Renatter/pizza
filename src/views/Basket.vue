@@ -194,12 +194,30 @@ export default {
     };
   },
   methods: {
-    async deleteItem(item) {
-      const docRef = doc(db, "cart", this.currentUser.uid);
-      await updateDoc(docRef, {
-        cart: arrayRemove(item),
-      });
+ async deleteItem(item) {
+      try {
+        const cartDocRef = doc(db, "cart", this.currentUser.uid);
+
+        // Get the current cart data
+        const cartDoc = await getDoc(cartDocRef);
+        const currentCart = cartDoc.exists() ? cartDoc.data().cart : [];
+
+        // Find the index of the item to be deleted in the current cart
+        const index = currentCart.findIndex((cartItem) => cartItem.id === item.id);
+
+        if (index !== -1) {
+          // Remove the item from the current cart array
+          currentCart.splice(index, 1);
+
+          // Update the cart document with the modified cart array
+          await updateDoc(cartDocRef, { cart: currentCart });
+        }
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
     },
+    // ... your existing methods ...
+
     updateTotalPrice(item) {
       // Метод для обновления общей стоимости товара
       item.totalSum = item.price * item.quantity;
@@ -215,6 +233,7 @@ export default {
     },
   },
   async created() {
+    
     // Check user authentication status
     auth.onAuthStateChanged(async (user) => {
       if (user) {
