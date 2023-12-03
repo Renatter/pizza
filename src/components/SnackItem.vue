@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[253px] mt-[50px]">
-    <img :src="id.img" alt="" />
+    <img class="w-[250px] h-[250px] object-contain" :src="id.img" alt="" />
     <p class="text-[#797979] text-[20px] font-black">
       {{ id.name }}
     </p>
@@ -9,7 +9,7 @@
     </p>
     <div class="] flex items-center justify-between">
       <p class="font-bold">{{ id.price }}тг бастап</p>
-      <router-link :to="{ path: '/prdocut/' + id.name }">
+      <router-link :to="{ path: '/SnacksView/' + id.name + '/' + cat }">
         <div
           class="ml-[15px] cursor-pointer focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
         >
@@ -21,8 +21,12 @@
 </template>
 
 <script>
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
 export default {
-  props: ["id"],
+  props: ["id", "cat"],
+  async created() {},
 };
 </script>
 

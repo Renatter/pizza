@@ -1,23 +1,24 @@
 <template>
   <div>
     <h1 class="text-[40px] font-[900] pt-[30px] text-[#FF2E65] pb-[50px]">
-      Заказ на доставку
+      Жеткізу тапсырысы
     </h1>
+
     <div class="flex justify-between">
       <div class="order-items w-[700px]">
         <div class="flex justify-between items-end">
           <label
             for="first_name"
             class="block mb-2 text-[17px] font-medium text-gray-900 dark:text-white"
-            >Имя</label
+            >Аты</label
           >
           <input
-          disabled
-          v-model="name"
+            disabled
+            v-model="name"
             type="text"
             id="first_name"
             class="cursor-not-allowed bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Имя"
+            placeholder="Аты"
             required
           />
         </div>
@@ -25,15 +26,15 @@
           <label
             for="first_name"
             class="block mb-2 text-[17px] font-medium text-gray-900 dark:text-white"
-            >Номер телефона</label
+            >Телефон нөмірі</label
           >
           <input
-          disabled
-          v-model="phone"
+            disabled
+            v-model="phone"
             type="text"
             id="first_name"
             class="cursor-not-allowed bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Номер телефона"
+            placeholder="Телефон нөмірі"
             required
           />
         </div>
@@ -41,15 +42,15 @@
           <label
             for="first_name"
             class="block mb-2 text-[17px] font-medium text-gray-900 dark:text-white"
-            >Адрес доставки</label
+            >Жеткізу мекенжайы</label
           >
           <input
-          disabled
-          v-model="fullAdress"
+            disabled
+            v-model="fullAdress"
             type="text"
             id="first_name"
             class="cursor-not-allowed bg-gray-50 h-[130px] w-[500px] border border-gray-300 text-[#a1a1aa] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Адрес доставки"
+            placeholder="Жеткізу мекенжайы"
             required
           />
         </div>
@@ -57,7 +58,7 @@
           <label
             for="first_name"
             class="block mb-2 text-[17px] font-medium text-gray-900 dark:text-white"
-            >Время доставки</label
+            >Жеткізу уақыты</label
           >
           <input
             v-model="time"
@@ -65,28 +66,41 @@
             type="text"
             id="first_name"
             class="bg-gray-50 w-[500px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Время доставки"
+            placeholder="Жеткізу уақыты"
             required
           />
         </div>
       </div>
-      <div class="w-[340px] rounded-[15px] border-[1px]">
-        <p class="text-[#FF2E65] font-medium p-[20px]">Состов заказа</p>
-        <div
-          v-for="item in 3"
-          class="flex justify-between items-start p-[20px]"
-        >
-          <div class="">
-            <p class="font-bold text-[16px]">Кломбо за 2шт</p>
-            <p class="text-[#231F20CC] text-[11px]">
-              Средняя 30 см, традиционное тесто
-            </p>
+      <div class="w-[430px] rounded-[15px] border-[1px] border-[#FF2E65]">
+        <div v-if="order === false">
+          <p class="text-[#FF2E65] font-medium p-[20px]">Тапсырыс құрамы</p>
+          <div
+            v-for="item in itemsPizza"
+            class="flex justify-between items-start p-[20px]"
+          >
+            <div class="">
+              <p class="font-bold text-[16px] w-[250px]">
+                {{ item.pizzaName }}
+                <span class="text-[#FF2E65]">{{ item.quantity }} шт </span>
+              </p>
+              <p class="text-[#231F20CC] text-[11px]">
+                {{ item.size }} {{ item.muka }}
+              </p>
+            </div>
+            <div class="price font-bold">{{ item.totalSum }} тг</div>
           </div>
-          <div class="price font-bold">599₽</div>
+          <div class="flex justify-between p-[20px]">
+            <p class="text-[#FF2E65] font-medium">Тапсырыс сомасы</p>
+            <div class="font-bold text-[17px]">
+              {{ calculateTotalSum() }} тг
+            </div>
+          </div>
         </div>
-        <div class="flex justify-between p-[20px]">
-          <p>Сумма заказа</p>
-          <div class="font-bold text-[17px]">1 048 ₽</div>
+        <div
+          v-if="order === true"
+          class="mt-[50px] text-center text-[60px] font-medium text-[#FF2E65]"
+        >
+          Жеткізуді күтіңіз
         </div>
       </div>
     </div>
@@ -94,7 +108,7 @@
   <div v-if="isModalVisible" class="modal">
     <div class="modal-content">
       <h1 class="text-[#FF2E65] text-[26px] font-bold mb-[35px]">
-        Время доставки
+        Жеткізу уақыты
       </h1>
       <div class="flex flex-wrap gap-[14px]">
         <!-- Loop through the delivery time options -->
@@ -118,22 +132,26 @@
   </h1>
   <div class="flex">
     <input
-    v-model="promo"
+      v-model="promoCode"
       type="text"
-      placeholder="Введите промокод"
+      placeholder="Жарнамалық кодты енгізіңіз"
       id="small-input"
       class="block p-2 w-[200px] text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-[#FF2E65] focus:border-[#FF2E65] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#FF2E65] dark:focus:border-[#FF2E65]"
     />
     <button
+      @click="applyPromoCode"
       type="button"
       class="ml-[15px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
     >
-      Применить
+      Қолдану
     </button>
+    <div v-if="disc" class="text-[#FF2E65] font-bold text-[25px]">
+      Промокод {{ disc }} %
+    </div>
   </div>
 
   <div class="w-[700px] bg-[#F1F2F5] mt-[60px] rounded-[6px] p-[35px]">
-    <h1 class="text-[30px] font-[900] text-[#FF2E65]">Способы оплаты</h1>
+    <h1 class="text-[30px] font-[900] text-[#FF2E65]">Төлем әдістері</h1>
     <div class="text-[18px]">
       <div class="flex items-center mt-[38px]">
         <input
@@ -147,7 +165,7 @@
         <label
           for="default-radio-1"
           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >Картой на сайте</label
+          >Сайттағы карта</label
         >
       </div>
 
@@ -157,7 +175,7 @@
             type="text"
             id="first_name"
             class="bg-gray-50 w-[322px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Номер карты"
+            placeholder="Карта нөмірі"
             required
           />
           <div class="flex justify-between pt-[10px]">
@@ -165,7 +183,7 @@
               type="text"
               id="first_name"
               class="bg-gray-50 w-[202px] border text-[#71717a] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Дата"
+              placeholder="Күні"
               required
             />
             <input
@@ -195,13 +213,14 @@
         <label
           for="default-radio-2"
           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >Наличными</label
+          >Қолма-қол ақшамен</label
         >
       </div>
-   
+
       <div v-if="selectedPaymentMethod === 'cash'" class="flex items-center">
-        <p class="text-[15px]">С какой суммы подготовить сдачу?</p>
+        <p class="text-[15px]">Сдача қандай сомадан дайындау керек?</p>
         <input
+          v-model="isCash"
           v-if="!isChecked"
           type="text"
           id="first_name"
@@ -210,7 +229,7 @@
           required
         />
         <p v-else class="text-[17px] text-[#FF2E65] font-medium mx-[15px]">
-          1500 тг
+          {{ calculateTotalSum() }} тг
         </p>
         <div class="ml-[9px]">
           <input
@@ -230,27 +249,29 @@
     </div>
   </div>
   <div class="flex justify-between items-center max-w-[710px] pt-[53px]">
-    <p class="text-[#696F7A] text-[15px] font-medium">Вернуться в магазин</p>
+    <p class="text-[#696F7A] text-[15px] font-medium"></p>
     <button
       type="button"
       @click="openModal2"
       class="ml-[15px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-[20px] px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
     >
-      Оформить заказ
+      Тапсырыс беру
     </button>
   </div>
   <div v-if="isModal" class="modal">
     <div class="modal-content">
       <h1 class="text-[#FF2E65] text-[26px] font-bold mb-[35px] text-center">
-        Заказ прниять ождайте
+        Тапсырыс қабылданды күте тұрыңыз
       </h1>
-      <button
-        type="button"
-        @click="closeModal2"
-        class="ml-[225px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-[20px] px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-      >
-        Закрыть
-      </button>
+      <router-link to="/">
+        <button
+          type="button"
+          @click="closeModal2"
+          class="ml-[225px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b63557] focus:ring-4 focus:ring-[#b63557] font-medium rounded-lg text-[20px] px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+        >
+          Жабу
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -265,6 +286,7 @@ import {
   doc,
   onSnapshot,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { db, auth } from "../firebase/firebase";
@@ -277,7 +299,7 @@ export default {
       time: "",
       isChecked: false,
       selectedPaymentMethod: "",
-      promo:'',
+      promo: "",
       deliveryTimeOptions: [
         "11:00",
         "13:00",
@@ -290,20 +312,43 @@ export default {
         "03:00",
         "05:00",
       ],
-      name:null,
-      phone:null,
+      name: null,
+      phone: null,
       fullAdress: null,
-      adres:null,
-      podezd:null,
-      floor:null,
-      door:null,
+      adres: null,
+      podezd: null,
+      floor: null,
+      door: null,
+      itemsPizza: [],
+      promoCode: "",
+      disc: "",
+      totalSum: null,
+      isCash: 0,
+      order: null,
     };
   },
   methods: {
+    calculateTotalSum() {
+      console.log("1");
+      const totalWithoutDiscount = this.itemsPizza.reduce(
+        (total, item) => total + item.totalSum,
+        0
+      );
+
+      if (this.disc) {
+        const discountAmount = totalWithoutDiscount * (1 - this.disc / 100);
+        const res = totalWithoutDiscount - discountAmount;
+
+        return totalWithoutDiscount - res;
+      } else {
+        return totalWithoutDiscount;
+      }
+    },
     openModal() {
       this.isModalVisible = true;
     },
     openModal2() {
+      this.addOrder();
       this.isModal = true;
     },
     closeModal() {
@@ -317,34 +362,63 @@ export default {
       this.time = this.deliveryTimeOptions[index]; // Set time to the selected option
       this.closeModal();
     },
+    async applyPromoCode() {
+      const promoCode = this.promoCode; // Значение промокода
+      const promoCollectionRef = collection(db, "promo"); // Ссылка на коллекцию "promo"
+
+      // Запрос Firestore для получения документа с соответствующим промокодом
+      const querySnapshot = await getDocs(
+        query(promoCollectionRef, where("name", "==", promoCode))
+      );
+
+      if (!querySnapshot.empty) {
+        const promoDoc = querySnapshot.docs[0].data();
+        const discount = promoDoc.discount;
+        this.disc = promoDoc.discount;
+        this.totalSum = this.totalSum * (1 - discount / 100);
+        this.calculateTotalSum();
+      }
+    },
+    async addOrder() {
+      const docRef = doc(db, "cart", `${this.currentUser}`);
+      await updateDoc(docRef, {
+        order: true,
+        name: this.name,
+        phone: this.phone,
+        time: this.time,
+        fullSum: this.calculateTotalSum(),
+        cash: this.selectedPaymentMethod,
+        isCheckedPrice: !this.isChecked ? +this.isCash : 0,
+      });
+    },
   },
-  async created () {
-        auth.onAuthStateChanged(async (user) => {
+  async created() {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
         this.currentUser = user.uid;
         const userDocRef = doc(db, "cart", this.currentUser);
-        
         onSnapshot(userDocRef, (doc) => {
           if (doc.exists()) {
-           this.adres = doc.data().adres;
-           this.floor = doc.data().floor;
-           this.door = doc.data().door;
-           this.podezd = doc.data().podezd 
-           
-               this.fullAdress = `Адрес: ${this.adres}, подъезд: ${this.podezd}, этаж: ${this.floor}, квартира: ${this.door}, `;
-          } 
+            this.itemsPizza = doc.data().cart;
+            this.adres = doc.data().adres;
+            this.floor = doc.data().floor;
+            this.door = doc.data().door;
+            this.podezd = doc.data().podezd;
+            this.order = doc.data().order;
+
+            this.fullAdress = `Адрес: ${this.adres}, подъезд: ${this.podezd}, этаж: ${this.floor}, квартира: ${this.door}, `;
+          }
         });
       }
       const userInfo = doc(db, "users", this.currentUser);
       onSnapshot(userInfo, (doc) => {
-          if (doc.exists()) {
-           this.name = doc.data().name;
-           this.phone = doc.data().phone;
-           
-          } 
-        });
+        if (doc.exists()) {
+          this.name = doc.data().firstName;
+          this.phone = doc.data().phone;
+        }
+      });
     });
-  }
+  },
 };
 </script>
 

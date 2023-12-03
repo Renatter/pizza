@@ -1,11 +1,11 @@
 <template>
-  <NewItems></NewItems>
   <PizzaView></PizzaView>
 </template>
 
 <script>
-import NewItems from "../views/NewItems.vue";
+import { doc, setDoc } from "firebase/firestore";
 import PizzaView from "../views/PizzaView.vue";
+import { db } from "../firebase/firebase";
 export default {
   components: { NewItems, PizzaView },
 };

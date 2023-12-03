@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ id }}</h1>
+    <h1></h1>
     <div class="flex min-h-[600px] items-start">
       <div class="min-w-[500px] flex justify-center items-center">
         <img
@@ -9,14 +9,14 @@
             'w-[350px]': activeTab === 'Tab2',
             'w-[500px]': activeTab === 'Tab3',
           }"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/f32256e8cefd4655ae646f22cf83390d_292x292.webp"
+          :src="item.img"
           alt=""
         />
       </div>
 
       <div class="text ml-[35px]">
         <h1 class="text-[70px] font-bold">{{ item.name }}</h1>
-        <p class="text-[25px]">{{ sm }} см, {{ muka }} тесто, {{ gm }} г</p>
+        <p class="text-[25px]">{{ sm }} см, {{ muka }} қамыр, {{ gm }} г</p>
         <p class="text-[#94a3b8] text-[25px] mt-[20px]">
           {{ item.ingredients }}
         </p>
@@ -35,7 +35,7 @@
               }"
               @click="changeTab('Tab1')"
             >
-              Маленькая
+              Кішкентай
             </a>
           </li>
           <li class="me-2 text-[20px]">
@@ -49,7 +49,7 @@
               }"
               @click="changeTab('Tab2')"
             >
-              Средняя
+              Орташа
             </a>
           </li>
           <li class="me-2 text-[20px]">
@@ -63,7 +63,7 @@
               }"
               @click="changeTab('Tab3')"
             >
-              Большая
+              Үлкен
             </a>
           </li>
         </ul>
@@ -81,7 +81,7 @@
               }"
               @click="selectTabe('Tab1')"
             >
-              Традиционное
+              Дәстүрлі
             </a>
           </li>
           <li class="me-2 text-[20px]">
@@ -95,7 +95,7 @@
               }"
               @click="selectTabe('Tab2')"
             >
-              Тонкое
+              Жіңішке
             </a>
           </li>
         </ul>
@@ -105,13 +105,13 @@
             type="button"
             class="text-[18px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b33456] focus:ring-4 focus:ring-[#b33456] font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
-            Добавить в корзину {{ item.price }}
+            Себетке қосу {{ item.price }}тг
           </button>
         </div>
       </div>
     </div>
     <h1 class="mt-[15px] font-bold text-[20px] mb-[15px]">
-      Добавить по вкусу {{ ingredientsPizza }}
+      Дәміне қарай қосыңыз
     </h1>
     <div class="flex flex-wrap gap-[10px] mb-[30px]">
       <Element
@@ -146,7 +146,7 @@ export default {
       id: this.$route.params.id,
       sm: 25,
       gm: 430,
-      muka: "Традиционное",
+      muka: "Дәстүрлі",
       activeTab: "Tab1",
       selectTab: "Tab1",
       item: {},
@@ -155,6 +155,10 @@ export default {
       currentUser: null,
       ingredientsPizza: [],
       cart: null,
+      cartData: {
+        order: false,
+        cart: [],
+      },
     };
   },
   methods: {
@@ -192,7 +196,7 @@ export default {
           this.muka = "Традиционное";
           break;
         case "Tab2":
-          this.muka = "Тонкое";
+          this.muka = "Жіңішке";
       }
     },
     async addToCart() {
@@ -204,7 +208,7 @@ export default {
 
         const newCartItem = {
           pizzaName: this.item.name,
-          image: "s",
+          image: this.item.img,
           content: this.item.ingredients,
           size: this.sm,
           gram: this.gm,
@@ -212,36 +216,34 @@ export default {
           ingredients: ingredientsPizza,
           quantity: 0,
           totalSum: 0,
+          muka: this.muka,
         };
-
-        const itemExists = (this.cart || []).some(
-          (item) => item.pizzaName === newCartItem.pizzaName
-        );
-
-        if (itemExists) {
-          alert("Уже есть этот товар в корзине");
-          return;
-        }
 
         try {
           const docSnap = await getDoc(docRef);
+          let updatedCart = [];
 
           if (docSnap.exists()) {
-            // Document already exists, merge the newCartItem into existing cart
             const existingCart = docSnap.data().cart || [];
-            const updatedCart = [...existingCart, newCartItem];
-            await setDoc(docRef, { cart: updatedCart });
+            updatedCart = [...existingCart, newCartItem];
           } else {
-            // Document doesn't exist, create a new cart with the newCartItem
-            await setDoc(docRef, { cart: [newCartItem] });
+            updatedCart = [newCartItem];
           }
 
-          console.log("Товар добавлен ву:", newCartItem);
+          const updatedCartData = {
+            order: false,
+            cart: updatedCart,
+          };
+
+          await setDoc(docRef, updatedCartData);
+
+          console.log("Өнім қосылды", newCartItem);
         } catch (error) {
-          console.error("Error adding item to cart: ", error);
-          // Handle errors as needed
+          console.error("Ошибка при добавлении товара в корзину:", error);
+          // Обработка ошибок по мере необходимости
         }
       }
+      alert("Өнім қосылды");
     },
   },
   async created() {
