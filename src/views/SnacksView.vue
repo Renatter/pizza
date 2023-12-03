@@ -11,13 +11,13 @@
           {{ item.ingredients }}
         </p>
 
-        <div class="mt-[50px]">
+        <div v-if="currentUser" class="mt-[50px]">
           <button
             @click="addToCart"
             type="button"
             class="text-[18px] focus:outline-none text-white bg-[#FF2E65] hover:bg-[#b33456] focus:ring-4 focus:ring-[#b33456] font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
-            Добавить в корзину {{ item.price }}
+            Себетке қосу {{ item.price }}тг
           </button>
         </div>
       </div>

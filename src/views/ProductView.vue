@@ -99,7 +99,7 @@
             </a>
           </li>
         </ul>
-        <div class="mt-[50px]">
+        <div v-if="currentUser" class="mt-[50px]">
           <button
             @click="addToCart"
             type="button"
