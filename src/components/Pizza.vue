@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-[253px] mt-[50px]">
     <img :src="id.img" alt="" />
-    <p class="text-[#797979] text-[20px] font-black">
+    <p class="text-[#797979] text-[20px] font-black truncate-text">
       {{ id.name }}
     </p>
-    <p class="text-[13px] mt-[10px] mb-[10px]">
+    <p class="text-[13px] mt-[10px] mb-[10px] truncate-text">
       {{ id.ingredients }}
     </p>
     <div class="] flex items-center justify-between">
@@ -26,4 +26,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+</style>

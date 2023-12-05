@@ -15,7 +15,7 @@
       </div>
 
       <div class="text ml-[35px]">
-        <h1 class="text-[70px] font-bold">{{ item.name }}</h1>
+        <h1 class="text-[50px] font-bold">{{ item.name }}</h1>
         <p class="text-[25px]">{{ sm }} см, {{ muka }} қамыр, {{ gm }} г</p>
         <p class="text-[#94a3b8] text-[25px] mt-[20px]">
           {{ item.ingredients }}
@@ -193,7 +193,7 @@ export default {
       this.selectTab = tab;
       switch (tab) {
         case "Tab1":
-          this.muka = "Традиционное";
+          this.muka = " Дәстүрлі";
           break;
         case "Tab2":
           this.muka = "Жіңішке";
@@ -225,6 +225,18 @@ export default {
 
           if (docSnap.exists()) {
             const existingCart = docSnap.data().cart || [];
+
+            // Check if the item already exists in the cart
+            const itemExists = existingCart.some(
+              (item) => item.pizzaName === newCartItem.pizzaName
+            );
+
+            if (itemExists) {
+              // Item already exists, show a message or handle it as needed
+              alert("Ондай өнім себетте бар");
+              return;
+            }
+
             updatedCart = [...existingCart, newCartItem];
           } else {
             updatedCart = [newCartItem];

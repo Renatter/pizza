@@ -1,5 +1,8 @@
 <template>
-  <div style="max-width: 950px; margin: 0 auto">
+  <div
+    style="max-width: 950px; margin: 0 auto"
+    class="whitespace-nowrap overflow-auto scrollbar-hide"
+  >
     <h1 class="text-[40px] font-[900] pt-[30px] text-[#FF2E65] pb-[50px]">
       Себет
     </h1>
@@ -29,9 +32,9 @@
             :src="item.image"
             alt=""
           />
-          <div class="ml-[25px] w-[450px]">
+          <div class="ml-[25px] w-[550px]">
             <h1 class="font-bold">{{ item.pizzaName }}</h1>
-            <p class="font-medium text-[13px] text-[#686466]">
+            <p class="font-medium text-[13px] text-[#686466] truncate-text">
               {{ item.content }} {{ item.gram }} г
             </p>
             <p class="font-medium text-[13px] text-[#686466]">
@@ -291,6 +294,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+body {
+  overflow: hidde;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -320,5 +326,11 @@ export default {
   cursor: pointer;
   background: none;
   border: none;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 </style>

@@ -67,12 +67,13 @@ export default {
           totalSum: 0,
         };
 
+        // Check if the item already exists in the cart
         const itemExists = (this.cart || []).some(
           (item) => item.pizzaName === newCartItem.pizzaName
         );
 
         if (itemExists) {
-          alert("Уже есть этот товар в корзине");
+          alert("Ондай өнім себетте бар");
           return;
         }
 
@@ -86,6 +87,7 @@ export default {
           } else {
             updatedCart = [newCartItem];
           }
+
           const updatedCartData = {
             order: false,
             cart: updatedCart,
